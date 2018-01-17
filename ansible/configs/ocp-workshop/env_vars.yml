@@ -42,6 +42,7 @@ install_prometheus: false
 ocp_report: false
 install_ipa_client: false
 remove_self_provisioners: false
+install_lets_encrypt_certificates: true
 # you can also use: allow_all, htpasswd, ldap
 
 install_idm: ldap
