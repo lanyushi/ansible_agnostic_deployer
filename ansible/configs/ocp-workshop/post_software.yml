@@ -127,13 +127,13 @@
     - name: Add capabilities within anyuid which is not really ideal
       command: "oc patch scc/anyuid --patch '{\"requiredDropCapabilities\":[\"MKNOD\",\"SYS_CHROOT\"]}'"
 
-    - name: Check for Node Selector (env=app) on project openshift-template-service-broker
-      shell: oc describe project openshift-template-service-broker|grep node-selector|grep app
+    - name: Check for Node Selector (env=users) on project openshift-template-service-broker
+      shell: oc describe project openshift-template-service-broker|grep node-selector|grep users
       register: node_selector_present
       ignore_errors: true
       when: osrelease | version_compare('3.7', '>=')
 
-    - name: Remove Node Selector (env=app) from project openshift-template-service-broker if it is set
+    - name: Remove Node Selector (env=users) from project openshift-template-service-broker if it is set
       shell: oc annotate namespace openshift-template-service-broker openshift.io/node-selector="" --overwrite
       when:
       - osrelease | version_compare('3.7', '>=')
