@@ -28,16 +28,16 @@
   - name: Add AWS Access Key to Let's Encrypt configuration
     lineinfile:
       path: /root/acme.sh/dnsapi/dns_aws.sh
-      line: AWS_ACCESS_KEY_ID="{{ aws_access_key_id }}"
+      line: AWS_ACCESS_KEY_ID="{{ hostvars['localhost'].route53user_access_key }}"
       state: present
       insertbefore: '^#AWS_ACCESS_KEY_ID'
 
   - name: Add AWS Secret Access Key to Let's Encrypt configuration
     lineinfile:
       path: /root/acme.sh/dnsapi/dns_aws.sh
-      line: AWS_SECRET_ACCESS_KEY="{{ aws_secret_access_key }}"
+      line: AWS_SECRET_ACCESS_KEY="{{ hostvars['localhost'].route53user_secret_access_key }}"
       state: present
-      insertbefore: '^#AWS_SECRET_ACCESS_KEY_ID'
+      insertbefore: '^#AWS_SECRET_ACCESS_KEY'
 
   - name: Request Wildcard Certificates from Let's Encrypt
     shell: "/root/acme.sh/acme.sh --server https://acme-staging-v02.api.letsencrypt.org/directory --test --issue -d {{ master_lb_dns }} -d *.{{ cloudapps_suffix }} --dns dns_aws"
